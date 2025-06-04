@@ -1,0 +1,20 @@
+import PropTypes from 'prop-types';
+
+const Select = ({ className = '', children, ...props }) => {
+  const baseClasses = 'w-full px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 dark:text-white transition-colors duration-200';
+  return (
+    <select
+      className={`${baseClasses} ${className}`}
+      {...props}
+    >
+      {children}
+    </select>
+  );
+};
+
+Select.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+export default Select;
