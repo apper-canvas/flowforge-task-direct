@@ -55,10 +55,26 @@
   
   .btn-secondary {
     @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2 rounded-lg transition-all duration-200;
-  }
+}
   
   .input-field {
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200;
+  }
+
+  .view-tabs {
+    @apply flex items-center bg-gray-100 dark:bg-gray-800 p-1 rounded-lg;
+  }
+  
+  .view-tab {
+    @apply flex items-center space-x-2 px-4 py-2 rounded-md font-medium text-sm transition-all duration-200;
+  }
+  
+  .view-tab.active {
+    @apply bg-white dark:bg-gray-700 text-primary shadow-sm;
+  }
+  
+  .view-tab:not(.active) {
+    @apply text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200;
   }
 }
 

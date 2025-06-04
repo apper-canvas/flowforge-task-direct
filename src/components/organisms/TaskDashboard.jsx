@@ -56,19 +56,41 @@ const TaskDashboard = ({
     }
   };
 
-  const handleTaskFormCancel = () => {
+const handleTaskFormCancel = () => {
     setShowTaskModal(false);
     setEditingTask(null);
   };
 
   const handleTaskStatusChange = async (taskId, newStatus) => {
     try {
-      await onTaskUpdate(taskId, { 
+      await onTaskUpdate(taskId, {
         status: newStatus,
         updatedAt: new Date().toISOString()
       });
     } catch (error) {
       console.error('Error updating task status:', error);
+    }
+  };
+
+  const handleBulkAction = async (action) => {
+    try {
+      if (action === 'complete') {
+        await Promise.all(
+          selectedTasks.map(taskId => 
+            onTaskUpdate(taskId, { 
+              status: 'completed',
+              updatedAt: new Date().toISOString()
+            })
+          )
+        );
+      } else if (action === 'delete') {
+        await Promise.all(
+          selectedTasks.map(taskId => onTaskDelete(taskId))
+        );
+      }
+      setSelectedTasks([]);
+    } catch (error) {
+      console.error('Error performing bulk action:', error);
     }
   };
 
