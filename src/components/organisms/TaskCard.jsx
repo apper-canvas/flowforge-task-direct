@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { formatDistance, isToday, isOverdue } from 'date-fns';
+import { formatDistance, isToday, isPast } from 'date-fns';
 import Checkbox from '../atoms/Checkbox';
 import PriorityDot from '../atoms/PriorityDot';
 import Text from '../atoms/Text';
@@ -12,7 +12,7 @@ import Button from '../atoms/Button';
 const TaskCard = ({ task, onToggleComplete, onEdit, onDelete, onDragStart, getProjectById, getUserById, isDragging = false }) => {
   const project = getProjectById(task.projectId);
   const user = getUserById(task.assignee);
-  const isTaskOverdue = task.dueDate && isOverdue(new Date(task.dueDate)) && task.status !== 'completed';
+  const isTaskOverdue = task.dueDate && isPast(new Date(task.dueDate)) && task.status !== 'completed';
   const isTaskToday = task.dueDate && isToday(new Date(task.dueDate));
 
   const priorityColors = {
