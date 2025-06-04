@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "FlowForge Web App",
+    "description": "Main task management application with collaborative features and real-time updates",
+    "color": "#6366F1",
+    "taskCount": 5,
+    "completedCount": 2
+  },
+  {
+    "id": 2,
+    "name": "API Development",
+    "description": "Backend API services and infrastructure for the FlowForge platform",
+    "color": "#10B981",
+    "taskCount": 6,
+    "completedCount": 1
+  },
+  {
+    "id": 3,
+    "name": "DevOps & Security",
+    "description": "Infrastructure, deployment pipelines, and security implementations",
+    "color": "#F59E0B",
+    "taskCount": 3,
+    "completedCount": 1
+  },
+  {
+    "id": 4,
+    "name": "Marketing & Growth",
+    "description": "User acquisition, branding, and business development initiatives",
+    "color": "#EF4444",
+    "taskCount": 4,
+    "completedCount": 1
+  },
+  {
+    "id": 5,
+    "name": "Mobile Application",
+    "description": "Native mobile apps for iOS and Android platforms",
+    "color": "#8B5CF6",
+    "taskCount": 0,
+    "completedCount": 0
+  },
+  {
+    "id": 6,
+    "name": "Data Analytics",
+    "description": "User behavior tracking and business intelligence dashboard",
+    "color": "#06B6D4",
+    "taskCount": 0,
+    "completedCount": 0
+  },
+  {
+    "id": 7,
+    "name": "Customer Support",
+    "description": "Help documentation, support tickets, and user onboarding",
+    "color": "#84CC16",
+    "taskCount": 0,
+    "completedCount": 0
+  },
+  {
+    "id": 8,
+    "name": "Integration Platform",
+    "description": "Third-party integrations with popular productivity tools",
+    "color": "#F97316",
+    "taskCount": 0,
+    "completedCount": 0
+  }
+]
