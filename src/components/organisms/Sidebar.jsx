@@ -77,18 +77,18 @@ Sidebar.propTypes = {
   views: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+icon: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
   })).isRequired,
   selectedView: PropTypes.string.isRequired,
   onSelectView: PropTypes.func.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
     taskCount: PropTypes.number.isRequired,
   })).isRequired,
-  selectedProject: PropTypes.string.isRequired,
+  selectedProject: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   onSelectProject: PropTypes.func.isRequired,
   tasksCount: PropTypes.number.isRequired,
 };
