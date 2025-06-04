@@ -20,13 +20,13 @@ const ProjectLink = ({ id, name, color, count, selected, onClick }) => {
       </div>
       <span className="text-xs bg-gray-200 dark:bg-gray-600 px-2 py-0.5 rounded-full">
         {count}
-      </span>
+</span>
     </Button>
   );
 };
 
 ProjectLink.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
