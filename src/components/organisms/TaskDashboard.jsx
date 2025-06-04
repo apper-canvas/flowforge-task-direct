@@ -54,13 +54,12 @@ const TaskDashboard = ({
     } catch (error) {
       console.error('Error saving task:', error);
     }
-  };
+};
 
-const handleTaskFormCancel = () => {
+  const handleTaskFormCancel = () => {
     setShowTaskModal(false);
     setEditingTask(null);
   };
-
   const handleTaskStatusChange = async (taskId, newStatus) => {
     try {
       await onTaskUpdate(taskId, {
@@ -388,7 +387,7 @@ TaskDashboard.propTypes = {
   onTaskUpdate: PropTypes.func.isRequired,
   onTaskDelete: PropTypes.func.isRequired,
   showTaskModal: PropTypes.bool.isRequired,
-  setShowTaskModal: PropTypes.func.isRequired,
+setShowTaskModal: PropTypes.func.isRequired,
   getProjectById: PropTypes.func.isRequired,
   getUserById: PropTypes.func.isRequired,
 };

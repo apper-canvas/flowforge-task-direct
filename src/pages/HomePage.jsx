@@ -11,10 +11,18 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [selectedProject, setSelectedProject] = useState('all');
+const [selectedProject, setSelectedProject] = useState('all');
   const [selectedView, setSelectedView] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showTaskModal, setShowTaskModal] = useState(false);
+  const [viewMode, setViewMode] = useState('list');
+  const [sortBy, setSortBy] = useState('dueDate');
+  const [showCompletedTasks, setShowCompletedTasks] = useState(true);
+  const [priorityFilter, setPriorityFilter] = useState('all');
+  const [assigneeFilter, setAssigneeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [dateRange, setDateRange] = useState(null);
+  const [selectedTasks, setSelectedTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(() => {
     return document.documentElement.classList.contains('dark');
   });
@@ -78,7 +86,31 @@ const HomePage = () => {
       setTasks(prev => prev.filter(task => task.id !== taskId));
       toast.success("Task deleted successfully!");
     } catch (err) {
-      toast.error("Failed to delete task");
+toast.error("Failed to delete task");
+    }
+  };
+
+  const handleBulkAction = async (action, taskIds) => {
+    try {
+      switch (action) {
+        case 'delete':
+          await Promise.all(taskIds.map(id => taskService.delete(id)));
+          setTasks(prev => prev.filter(task => !taskIds.includes(task.id)));
+          toast.success(`${taskIds.length} tasks deleted successfully!`);
+          break;
+        case 'complete':
+          await Promise.all(taskIds.map(id => taskService.update(id, { status: 'completed' })));
+          setTasks(prev => prev.map(task => 
+            taskIds.includes(task.id) ? { ...task, status: 'completed' } : task
+          ));
+          toast.success(`${taskIds.length} tasks marked as completed!`);
+          break;
+        default:
+          break;
+      }
+      setSelectedTasks([]);
+    } catch (err) {
+      toast.error(`Failed to ${action} tasks`);
     }
   };
 
@@ -134,8 +166,24 @@ const HomePage = () => {
       task.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       task.description?.toLowerCase().includes(searchQuery.toLowerCase());
     
-    return matchesProject && matchesView && matchesSearch;
+return matchesProject && matchesView && matchesSearch;
   }) || [];
+
+  const sortedTasks = filteredTasks.sort((a, b) => {
+    switch (sortBy) {
+      case 'dueDate':
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return new Date(a.dueDate) - new Date(b.dueDate);
+      case 'priority':
+        const priorityOrder = { high: 3, medium: 2, low: 1 };
+        return (priorityOrder[b.priority] || 0) - (priorityOrder[a.priority] || 0);
+      case 'title':
+        return (a.title || '').localeCompare(b.title || '');
+      default:
+        return 0;
+    }
+  });
 
   const headerProps = {
     onMenuToggle: () => setSidebarCollapsed(!sidebarCollapsed),
@@ -177,8 +225,30 @@ const HomePage = () => {
   };
 
   if (error) {
-    return <PageError message={error} />;
+return <PageError message={error} />;
   }
+
+  const filterBarProps = {
+    viewMode,
+    onViewModeChange: setViewMode,
+    sortBy,
+    onSortByChange: setSortBy,
+    showCompletedTasks,
+    onToggleCompletedTasks: setShowCompletedTasks,
+    priorityFilter,
+    onPriorityFilterChange: setPriorityFilter,
+    assigneeFilter,
+    onAssigneeFilterChange: setAssigneeFilter,
+    statusFilter,
+    onStatusFilterChange: setStatusFilter,
+    dateRange,
+    onDateRangeChange: setDateRange,
+    projects,
+    users,
+    selectedTasks,
+    onBulkAction: handleBulkAction,
+    onClearSelection: () => setSelectedTasks([])
+  };
 
   return (
     <DashboardTemplate
@@ -186,7 +256,7 @@ const HomePage = () => {
       sidebarProps={sidebarProps}
       mainContent={
         <TaskDashboard
-          tasks={filteredTasks}
+          tasks={sortedTasks}
           projects={projects}
           users={users}
           loading={loading}
@@ -197,6 +267,10 @@ const HomePage = () => {
           setShowTaskModal={setShowTaskModal}
           getProjectById={getProjectById}
           getUserById={getUserById}
+          viewMode={viewMode}
+          selectedTasks={selectedTasks}
+          onTaskSelection={setSelectedTasks}
+          filterBarProps={filterBarProps}
         />
       }
       mobileSearchProps={mobileSearchProps}
