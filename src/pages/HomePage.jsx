@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { taskService, projectService, userService } from '../services';
-import DashboardTemplate from '../components/templates/DashboardTemplate';
+import DashboardTemplate from '../templates/DashboardTemplate';
 import PageError from '../components/organisms/PageError';
-import TaskDashboard from '../components/organisms/TaskDashboard'; // Assuming TaskDashboard is now an organism
-
+import TaskDashboard from '../components/organisms/TaskDashboard';
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
