@@ -1,8 +1,8 @@
+import * as LucideIcons from 'lucide-react';
 import PropTypes from 'prop-types';
-import * as FeatherIcons from 'react-feather';
 
 const AppIcon = ({ name, className = '', ...props }) => {
-  const IconComponent = FeatherIcons[name];
+  const IconComponent = LucideIcons[name];
 
   if (!IconComponent) {
     console.warn(`Icon "${name}" not found. Using a fallback.`);
